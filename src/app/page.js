@@ -1,5 +1,6 @@
 "use client";
 
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Plane } from "components/3d/Plane";
 import { Torus } from "components/3d/Torus";
@@ -7,7 +8,6 @@ import useClickCount from "hooks/useClickCount";
 import useMousePosition from "hooks/useMousePosition";
 import usePageWidth from "hooks/usePageSize";
 import { createElement, useEffect, useState } from "react";
-import { Fog } from "three";
 
 export default function HomePage(props) {
   const pageWidth = usePageWidth();
@@ -28,6 +28,7 @@ export default function HomePage(props) {
             justifyContent: "flex-start",
             alignItems: "flex-start",
             gap: "10px",
+            pointerEvents: 'none',
           },
         },
         createElement(
@@ -61,8 +62,9 @@ export default function HomePage(props) {
     <div id="container">
       <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
         <fog attach="fog" color="white" near={1} far={10} />
-          <Torus />
+        <Torus />
         <Plane />
+        {/* <OrbitControls /> */}
       </Canvas>
       <p>
         {pageWidth.x} {pageWidth.y}
@@ -79,6 +81,7 @@ export default function HomePage(props) {
             position: "absolute",
             top: mousePosition.y,
             left: mousePosition.x,
+            pointerEvents: 'none',
           }}
         ></div>
       ) : null}
