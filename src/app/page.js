@@ -16,7 +16,7 @@ export default function HomePage(props) {
   const [dots, setDots] = useState([]);
 
   useEffect(() => {
-    if (clickCount > 0) {
+    if (clickCount > 0 && clickCount !== dots.length) {
       const div = createElement(
         "div",
         {
@@ -30,6 +30,7 @@ export default function HomePage(props) {
             gap: "10px",
             pointerEvents: 'none',
           },
+          key: 'point' + Math.random(),
         },
         createElement(
           "div", 
@@ -56,7 +57,7 @@ export default function HomePage(props) {
       );
       setDots((prev) => [...prev, div]);
     }
-  }, [clickCount]);
+  }, [clickCount, dots, mousePosition]);
 
   return (
     <div id="container">
@@ -64,7 +65,6 @@ export default function HomePage(props) {
         <fog attach="fog" color="white" near={1} far={10} />
         <Torus />
         <Plane />
-        {/* <OrbitControls /> */}
       </Canvas>
       <p>
         {pageWidth.x} {pageWidth.y}

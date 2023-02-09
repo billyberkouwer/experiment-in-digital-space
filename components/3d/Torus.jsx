@@ -5,7 +5,7 @@ Command: npx gltfjsx@6.1.2 torus.gltf --transform
 
 import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { LineBasicMaterial, MeshStandardMaterial } from 'three'
+import { MeshStandardMaterial } from 'three'
 import { useFrame } from '@react-three/fiber'
 
 export function Torus(props) {
@@ -34,7 +34,7 @@ export function Torus(props) {
         }
       }
     })
-  })
+  }, [])
 
   useFrame(() => {
     ref.current.rotation.x+=0.01;

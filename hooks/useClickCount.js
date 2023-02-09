@@ -13,7 +13,7 @@ export default function useClickCount() {
         window.addEventListener("mousedown", () => {
             int = setInterval(() => {
                 setClickCount(prev => prev = prev + 1);
-            }, 40);
+            }, 30);
         })
 
         window.addEventListener("mouseup", () => {
