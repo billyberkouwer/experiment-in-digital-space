@@ -7,7 +7,24 @@ export default function useClickCount() {
         window.addEventListener("click", () => {
             setClickCount(prev => prev = prev + 1);
         });
-        return () => window.removeEventListener("click", () => {});
+
+        let int;
+
+        window.addEventListener("mousedown", () => {
+            int = setInterval(() => {
+                setClickCount(prev => prev = prev + 1);
+            }, 40);
+        })
+
+        window.addEventListener("mouseup", () => {
+            clearInterval(int);
+        })
+
+        return () => {
+            window.removeEventListener("click", () => {});
+            window.removeEventListener("mousedown", () => {});
+            window.removeEventListener("mouseup", () => {});
+        };
     }, []);
 
     return clickCount;
