@@ -40,8 +40,8 @@ export function Torus(props) {
     ref.current.rotation.x+=0.01;
     ref.current.rotation.y+=0.002;
     ref.current.rotation.z+=0.001;
-    ref.current.rotation.x += mouseVelocity.current.x/800;
-    ref.current.rotation.y += mouseVelocity.current.y/800;
+    ref.current.rotation.x += mouseVelocity.current.x/600;
+    ref.current.rotation.y += mouseVelocity.current.y/600;
     if (mouseVelocity.current.x > 1) {
       mouseVelocity.current.x-=0.5;
     }

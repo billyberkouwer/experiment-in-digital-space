@@ -1,6 +1,5 @@
 "use client";
 
-import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Plane } from "components/3d/Plane";
 import { Torus } from "components/3d/Torus";
@@ -8,6 +7,7 @@ import useClickCount from "hooks/useClickCount";
 import useMousePosition from "hooks/useMousePosition";
 import usePageWidth from "hooks/usePageSize";
 import isMobile from "is-mobile";
+import { useRouter } from "next/navigation";
 import { createElement, useEffect, useState } from "react";
 
 export default function HomePage(props) {
@@ -60,20 +60,15 @@ export default function HomePage(props) {
     }
   }, [clickCount, dots, mousePosition]);
 
-  if (isMobile()) {
+  if (isMobile) {
     return (
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', textAlign: 'center'}}>
-        <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
-          <fog attach="fog" color="white" near={1} far={10} />
-          <Torus />
-          <Plane />
-        </Canvas>
-        <h2 style={{maxWidth: '200px'}}>
-          visit this site on desktop
-        </h2>
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <h1>
+          This is not a mobile exprience. Visit on desktop.
+        </h1>
       </div>
     )
-  } else {return (
+  } return (
     <div id="container">
       <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
         <fog attach="fog" color="white" near={1} far={10} />
@@ -101,5 +96,5 @@ export default function HomePage(props) {
       ) : null}
       {dots}
     </div>
-  );}
+  );
 }
