@@ -70,7 +70,7 @@ export default function HomePage(props) {
     )
   } return (
     <div id="container">
-      <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
+      <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} >
         <fog attach="fog" color="white" near={1} far={10} />
         <Torus />
         <Plane />

@@ -7,10 +7,34 @@ div, body {
 html {
     height: 100%;
     width: 100%;
+    background-color: black;
+}
+
+.mouseObjectContainer {
+    position: absolute;
+    display:  flex;
+    justify-content: flex-start;
+    align-items:  flex-start;
+    gap:  10px;
+    pointer-events:  none;
+}
+
+.mouseObject {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+.mouseText {
+    margin: 0;
+    position: relative;
+    top: -0.33em;
 }
 
 h1, h2, h3, h4, h5, h6, p {
     margin: 10px;
+    color: white;
     padding: 0;
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */

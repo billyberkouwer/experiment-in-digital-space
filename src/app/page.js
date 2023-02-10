@@ -1,6 +1,5 @@
 "use client";
 
-import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Plane } from "components/3d/Plane";
 import { Torus } from "components/3d/Torus";
@@ -21,50 +20,38 @@ export default function HomePage(props) {
       const div = createElement(
         "div",
         {
+          className: "mouseObjectContainer",
           style: {
-            position: "absolute",
             top: mousePosition.y,
             left: mousePosition.x,
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            gap: "10px",
-            pointerEvents: 'none',
           },
           key: 'point' + Math.random(),
         },
         createElement(
           "div", 
           {
+            className: "mouseObject",
             style: {
-                width: "10px",
-                height: "10px",
-                minWidth: "10px",
-                minHeight: "10px",
                 backgroundColor: "red",
             },
         }),
         createElement(
           "p",
           {
-            style: {
-              margin: 0,
-              position: "relative",
-              top: "-0.33em",
-            },
+            className: "mouseText",
           },
-          `x: ${mousePosition.x}, y: ${mousePosition.y}`
+          `X: ${mousePosition.x} Y:${mousePosition.y}`
         )
       );
-      setDots((prev) => [...prev, div]);
+      setDots((prev) => {return [...prev, div]});
+      console.log(clickCount)
     }
   }, [clickCount, dots, mousePosition]);
 
   if (isMobile()) {
     return (
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', textAlign: 'center'}}>
-        <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
-          <fog attach="fog" color="white" near={1} far={10} />
+        <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} >
           <Torus />
           <Plane />
         </Canvas>
@@ -75,29 +62,26 @@ export default function HomePage(props) {
     )
   } else {return (
     <div id="container">
-      <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} fog>
-        <fog attach="fog" color="white" near={1} far={10} />
+      <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} >
+        <fog attach="fog" color="black" near={1} far={10} />
+        <directionalLight position={[0,5,0]}/>
         <Torus />
         <Plane />
       </Canvas>
       <p>
         {pageWidth.x} {pageWidth.y}
       </p>
-      <p>
-        {mousePosition.x} {mousePosition.y}
-      </p>
       {mousePosition.x && mousePosition.y ? (
         <div
-          style={{
-            width: "10px",
-            height: "10px",
-            backgroundColor: "black",
-            position: "absolute",
-            top: mousePosition.y,
-            left: mousePosition.x,
-            pointerEvents: 'none',
+          className="mouseObjectContainer"
+          style={{ 
+            top: mousePosition.y ,
+            left: mousePosition.x ,
           }}
-        ></div>
+        >
+          <div className="mouseObject" style={{border: 'solid white 1px'}}></div>
+          <p className="mouseText">X: {mousePosition.x} Y: {mousePosition.y}</p>
+        </div>
       ) : null}
       {dots}
     </div>
