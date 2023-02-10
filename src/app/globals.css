@@ -3,7 +3,7 @@
     src: url('/Inter-Thin.ttf') format('truetype');
 }
 
-div, body {
+div {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -11,11 +11,44 @@ div, body {
     letter-spacing: -0.1em;
 }
 
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Inter;
+    letter-spacing: -0.1em;
+    overflow: hidden;
+}
+
 html {
     height: 100%;
     width: 100%;
     background-color: black;
     cursor: none;
+    overflow: hidden;
+}
+
+.axis {
+    height: calc(100% - 10px);
+    top: 5px;
+    left: 5px;
+    width: calc(100% - 10px);
+    border-left: 1px dashed white;
+    border-top: 1px dashed white;
+    position: absolute;
+}
+
+.axisNumber {
+    position: absolute;
+    margin: 5px;
+}
+
+.axisNumberX {
+    border-left: dashed white 1px
+}
+
+.axisNumberY {
+    border-top: dashed white 1px
 }
 
 .mouseObjectContainer {
@@ -25,7 +58,16 @@ html {
     align-items:  flex-start;
     gap:  10px;
     pointer-events:  none;
-    transform: translateY(-25%) translateX(-5%)
+    transform: translateY(-25%) translateX(-5px);
+    padding: 0 10px 0 0;
+}
+
+.mouseObjectBackground {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(192, 233, 255, 0.025);
+    transform: translateY(-25%) translateX(-5%);
 }
 
 .mouseObject {
