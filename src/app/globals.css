@@ -3,6 +3,11 @@
     src: url('/Inter-Thin.ttf') format('truetype');
 }
 
+* {
+    transition-property: background, color;
+    transition-duration: 0.5s;
+}
+
 div {
     padding: 0;
     margin: 0;
@@ -23,9 +28,55 @@ body {
 html {
     height: 100%;
     width: 100%;
-    background-color: black;
+    /* background-color: black; */
     cursor: none;
     overflow: hidden;
+}
+
+.container--dark-theme {
+    background-color: black;
+}
+
+.container--light-theme {
+    background-color: white;
+}
+
+.switch {
+    width: 100px;
+    height: 40px;
+    border: dashed white 1px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(4, 4, 4, 0.281);
+    backdrop-filter: blur(2px);
+    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    z-index: 0;
+    padding: 0;
+}
+
+.switch--light-theme {
+    background-color: rgba(255, 255, 255, 0.284);
+    border: dashed black 1px;
+}
+
+.thumb {
+    width: 40px;
+    height: 38px;
+    background-color: rgb(21, 21, 21);
+    position: absolute;
+    border: dashed white 1px;
+    transition-property: transform;
+    transition-duration: 0.2s;
+}
+
+.thumb--light-theme {
+    transform: translateX(60px);
+    background-color: white;
+    border: dashed black 1px;
 }
 
 .axis {
@@ -33,9 +84,19 @@ html {
     top: 5px;
     left: 5px;
     width: calc(100% - 10px);
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.axis--dark-theme {
     border-left: 1px dashed white;
     border-top: 1px dashed white;
-    position: absolute;
+}
+
+.axis--light-theme {
+    border-left: 1px dashed black;
+    border-top: 1px dashed black;
 }
 
 .axisNumber {
@@ -43,11 +104,19 @@ html {
     margin: 5px;
 }
 
-.axisNumberX {
+.axisNumberX--dark-theme {
     border-left: dashed white 1px
 }
 
-.axisNumberY {
+.axisNumberY--light-theme {
+    border-top: dashed black 1px
+}
+
+.axisNumberX--light-theme {
+    border-left: dashed black 1px
+}
+
+.axisNumberY--dark-theme {
     border-top: dashed white 1px
 }
 
@@ -57,7 +126,7 @@ html {
     justify-content: flex-start;
     align-items:  flex-start;
     gap:  10px;
-    pointer-events:  none;
+    pointer-events: none;
     transform: translateY(-25%) translateX(-5px);
     padding: 0 10px 0 0;
 }
@@ -66,8 +135,17 @@ html {
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: rgba(192, 233, 255, 0.025);
+    pointer-events: none;
     transform: translateY(-25%) translateX(-5%);
+}
+
+.mouseObjectBackground--dark-theme {
+    background-color: rgba(192, 233, 255, 0.025);
+}
+
+
+.mouseObjectBackground--light-theme {
+    background-color: rgba(50, 63, 70, 0.025);
 }
 
 .mouseObject {
@@ -75,6 +153,31 @@ html {
     height: 10px;
     min-width: 10px;
     min-height: 10px;
+    pointer-events: none;
+}
+
+.mouseTracker {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    pointer-events: none;
+}
+
+.mouseTracker--dark-theme {
+    border: solid white 1px;
+}
+
+.mouseTracker--light-theme {
+    border: solid black 1px;
+}
+
+.mouseObject--dark-theme {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.mouseObject--light-theme {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .mouseText {
@@ -85,10 +188,17 @@ html {
 
 h1, h2, h3, h4, h5, h6, p {
     margin: 10px;
-    color: white;
     padding: 0;
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+.text--dark-theme {
+    color: white;
+}
+
+.text--light-theme {
+    color: black;
 }

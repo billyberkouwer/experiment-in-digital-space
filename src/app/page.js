@@ -8,9 +8,12 @@ import useMousePosition from "hooks/useMousePosition";
 import usepageSize from "hooks/usePageSize";
 import isMobile from "is-mobile";
 import { createElement, useEffect, useState } from "react";
+import { Color } from "three";
 import Axis from "./axis";
+import CustomSwitch from "./customSwitch";
 import Dot from "./dot";
 import Points from "./points";
+import { IOSSwitch } from "./switch";
 
 export default function HomePage(props) {
   const pageSize = usepageSize();
@@ -20,7 +23,14 @@ export default function HomePage(props) {
   const [mousePositions, setMousePositions] = useState([]);
   const [isMobileClient, setIsMobileClient] = useState(false);
   const [maxScreen, setMaxScreen] = useState({width: 0, height: 0});
-  const [scaleIncrements, setScaleIncrements] = useState([])
+  const [scaleIncrements, setScaleIncrements] = useState([]);
+  const [theme, setTheme] = useState('dark');
+  const dark = theme === 'dark';
+  const light = theme === 'light';
+
+  useEffect(() => {
+    console.log(theme)
+  }, [theme])
 
   useEffect(() => {
     setIsMobileClient(isMobile());
@@ -73,19 +83,28 @@ export default function HomePage(props) {
     );
   } else {
     return (
-      <div id="container" style={{maxWidth: maxScreen.width + 'px', maxHeight: maxScreen.height + 'px', overflow: 'hidden', width: '100%', height: '100vh'}}>
+      <div id="container" 
+      className={`${dark && 'container--dark-theme'} ${light && 'container--light-theme'}`} 
+      style={{
+          overflow: 'hidden', 
+          width: '100%', 
+          height: '100vh'
+        }}>
         <Canvas
           style={{
             position: "absolute",
             height: "100vh",
             width: "100vw",
             top: 0,
+            pointerEvents: "none"
           }}
         >
-          <fog attach="fog" color="black" near={1} far={10} />
-          <Torus />
-          <Plane />
+          {light && <fog attach="fog" color="white" near={1} far={10} />}
+          {dark && <fog attach="fog" color="black" near={1} far={10} />}
+          <Torus theme={theme} />
+          <Plane theme={theme} />
         </Canvas>
+        <CustomSwitch theme={theme} setTheme={setTheme} />  
         {mousePosition.x && mousePosition.y ? (
           <div
             className="mouseObjectContainer"
@@ -95,16 +114,15 @@ export default function HomePage(props) {
             }}
           >
             <div
-              className="mouseObject"
-              style={{ border: "solid white 1px" }}
+              className={`mouseTracker ${dark && 'mouseTracker--dark-theme'} ${light && 'mouseTracker--light-theme'}`}
             ></div>
-            <p className="mouseText">
+            <p className={`mouseText ${dark && 'text--dark-theme'} ${light && 'text--light-theme'}`}>
               X: {mousePosition.x} Y: {mousePosition.y}
             </p>
           </div>
         ) : null}
-        <Axis scaleIncrements={scaleIncrements} />
-        <Points mousePositions={mousePositions} />
+        <Axis theme={theme} scaleIncrements={scaleIncrements} />   
+        <Points theme={theme} mousePositions={mousePositions} />
       </div>
     );
   }

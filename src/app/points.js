@@ -1,6 +1,7 @@
 import Dots from "./dot";
 
-export default function Points({mousePositions}) {
+export default function Points({mousePositions, theme}) {
+
     return (
         mousePositions.map((el, i) => {
             if (mousePositions.length - i <= 300) {
@@ -10,6 +11,7 @@ export default function Points({mousePositions}) {
                   mouseX={el.x}
                   mouseY={el.y}
                   opacity={i / mousePositions.length}
+                  theme={theme}
                 />
               );
             }

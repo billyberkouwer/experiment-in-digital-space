@@ -1,13 +1,19 @@
 import React, { useEffect, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { LineBasicMaterial, TorusGeometry } from 'three'
+import { Color, TorusGeometry } from 'three'
 import { useFrame } from '@react-three/fiber'
+import { lineMaterial } from './Materials';
 
-export function Torus(props) {
+export function Torus({theme}) {
   const mouseVelocity = useRef({x: 0, y: 0});
   const ref = useRef();
-  const geometry = new TorusGeometry(1.5,0.4,16,100)
-  const material = new LineBasicMaterial( { color: 'white' } );
+  const geo = new TorusGeometry(1.5,0.4,16,100)
+  if (theme === 'dark') {
+    lineMaterial.color = new Color('white')
+  }
+  if (theme === 'light') {
+    lineMaterial.color = new Color('black')
+  }
   
   useEffect(() => {
     let isMouseDown = false;
@@ -70,9 +76,7 @@ export function Torus(props) {
   })
 
   return (
-    <group {...props} dispose={null} ref={ref} position={[0,0,-1]}>
-      <lineSegments material={material} geometry={geometry} />
-    </group>
+      <lineSegments material={lineMaterial} geometry={geo} dispose={null} ref={ref} position={[0,0,-1]} />
   )
 }
 
