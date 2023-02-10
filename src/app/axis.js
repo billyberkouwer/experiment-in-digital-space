@@ -3,10 +3,10 @@ export default function Axis({scaleIncrements}) {
         <>
             <div className="axis" />
             {scaleIncrements.map((el, i) =>
-                <p className="axisNumber axisNumberX" style={{left: el.width}}>{el.width}</p>
+                <p key={'x axis number ' + i} className="axisNumber axisNumberX" style={{left: el.width}}>{el.width}</p>
             )}
             {scaleIncrements.map((el, i) =>
-                <p className="axisNumber axisNumberY" style={{top: el.height}}>{el.height}</p>
+                <p key={'y axis number ' + i} className="axisNumber axisNumberY" style={{top: el.height}}>{el.height}</p>
             )}
         </>
     )
