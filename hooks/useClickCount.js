@@ -4,26 +4,38 @@ export default function useClickCount() {
     const [clickCount, setClickCount] = useState(0);
 
     useEffect(() => {
+        let interval;
+
         window.addEventListener("click", () => {
             setClickCount(prev => prev = prev + 1);
         });
 
-        let int;
-
         window.addEventListener("mousedown", () => {
-            int = setInterval(() => {
+            interval = setInterval(() => {
                 setClickCount(prev => prev = prev + 1);
-            }, 30);
-        })
+            }, 10);
+        });
 
         window.addEventListener("mouseup", () => {
-            clearInterval(int);
-        })
+            clearInterval(interval)
+        });
 
         return () => {
-            window.removeEventListener("click", () => {});
-            window.removeEventListener("mousedown", () => {});
-            window.removeEventListener("mouseup", () => {});
+            window.removeEventListener("click", () => {
+                setClickCount(prev => prev = prev + 1);
+            });
+
+            window.removeEventListener("mousedown", () => {
+                interval = setInterval(() => {
+                    setClickCount(prev => prev = prev + 1);
+                }, 10);
+            });
+
+            window.removeEventListener("mouseup", () => {
+                clearInterval(interval)
+            });
+            
+            clearInterval(interval);
         };
     }, []);
 

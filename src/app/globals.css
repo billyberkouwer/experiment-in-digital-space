@@ -1,13 +1,21 @@
+@font-face {
+    font-family: Inter;
+    src: url('/Inter-Thin.ttf') format('truetype');
+}
+
 div, body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: Inter;
+    letter-spacing: -0.1em;
 }
 
 html {
     height: 100%;
     width: 100%;
     background-color: black;
+    cursor: none;
 }
 
 .mouseObjectContainer {
@@ -17,6 +25,7 @@ html {
     align-items:  flex-start;
     gap:  10px;
     pointer-events:  none;
+    transform: translateY(-25%) translateX(-5%)
 }
 
 .mouseObject {

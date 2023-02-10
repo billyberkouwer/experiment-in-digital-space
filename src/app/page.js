@@ -8,46 +8,20 @@ import useMousePosition from "hooks/useMousePosition";
 import usePageWidth from "hooks/usePageSize";
 import isMobile from "is-mobile";
 import { createElement, useEffect, useState } from "react";
+import Dots from "./dots";
 
 export default function HomePage(props) {
   const pageWidth = usePageWidth();
   const mousePosition = useMousePosition();
   const clickCount = useClickCount();
    const [dots, setDots] = useState([]);
+   const [mousePositions, setMousePositions] = useState([]);
 
   useEffect(() => {
-    if (clickCount > 0 && clickCount !== dots.length) {
-      const div = createElement(
-        "div",
-        {
-          className: "mouseObjectContainer",
-          style: {
-            top: mousePosition.y,
-            left: mousePosition.x,
-          },
-          key: 'point' + Math.random(),
-        },
-        createElement(
-          "div", 
-          {
-            className: "mouseObject",
-            style: {
-                backgroundColor: "red",
-            },
-        }),
-        createElement(
-          "p",
-          {
-            className: "mouseText",
-          },
-          `X: ${mousePosition.x} Y:${mousePosition.y}`
-        )
-      );
-      setDots((prev) => {return [...prev, div]});
-      console.log(clickCount)
-    }
-  }, [clickCount, dots, mousePosition]);
-
+      const mousePos = {x: mousePosition.x, y: mousePosition.y};
+      setMousePositions(prev => [...prev.slice(prev.length-300), mousePos]);
+  }, [clickCount]);
+  
   if (isMobile()) {
     return (
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100vw', textAlign: 'center'}}>
@@ -64,7 +38,6 @@ export default function HomePage(props) {
     <div id="container">
       <Canvas style={{position: 'absolute', height: '100vh', width: '100vw', top: 0}} >
         <fog attach="fog" color="black" near={1} far={10} />
-        <directionalLight position={[0,5,0]}/>
         <Torus />
         <Plane />
       </Canvas>
@@ -83,7 +56,14 @@ export default function HomePage(props) {
           <p className="mouseText">X: {mousePosition.x} Y: {mousePosition.y}</p>
         </div>
       ) : null}
-      {dots}
+      {mousePositions.map((el, i) => {
+        if (mousePositions.length - i <=300) {
+            return (
+              <Dots key={'dot ' + i} mouseX={el.x} mouseY={el.y} opacity={i/mousePositions.length} />  
+            )
+          }
+        }
+      )}
     </div>
   );}
 }

@@ -27,7 +27,26 @@ export function Torus(props) {
           y: e.movementY
         }
       }
-    })
+    });
+
+    return () => {
+      window.removeEventListener("mousedown", () => {
+        isMouseDown = true;
+      })
+  
+      window.removeEventListener("mouseup", () => {
+        isMouseDown = false;
+      })
+  
+      window.removeEventListener('mousemove', (e) => {
+        if (isMouseDown === true) {
+          mouseVelocity.current = {
+            x: e.movementX,
+            y: e.movementY
+          }
+        }
+      });
+    }
   }, [])
 
   useFrame(() => {

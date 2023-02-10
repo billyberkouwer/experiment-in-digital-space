@@ -9,54 +9,24 @@ import usePageWidth from "hooks/usePageSize";
 import isMobile from "is-mobile";
 import { useRouter } from "next/navigation";
 import { createElement, useEffect, useState } from "react";
+import Dots from "../dots";
 
 export default function HomePage(props) {
   const pageWidth = usePageWidth();
   const mousePosition = useMousePosition();
   const clickCount = useClickCount();
    const [dots, setDots] = useState([]);
+   const [mousePositions, setMousePositions] = useState([]);
 
   useEffect(() => {
-    if (clickCount > 0 && clickCount !== dots.length) {
-      const div = createElement(
-        "div",
-        {
-          style: {
-            position: "absolute",
-            top: mousePosition.y,
-            left: mousePosition.x,
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            gap: "10px",
-            pointerEvents: 'none',
-          },
-          key: 'point' + Math.random(),
-        },
-        createElement(
-          "div", 
-          {
-            style: {
-                width: "10px",
-                height: "10px",
-                minWidth: "10px",
-                minHeight: "10px",
-                backgroundColor: "red",
-            },
-        }),
-        createElement(
-          "p",
-          {
-            style: {
-              margin: 0,
-              position: "relative",
-              top: "-0.33em",
-            },
-          },
-          `x: ${mousePosition.x}, y: ${mousePosition.y}`
-        )
-      );
-      setDots((prev) => [...prev, div]);
+    if (clickCount !== dots.length) {
+      const mousePositions = [];
+      for (let i = 0; i < clickCount; i++) {
+        mousePositions.push(
+          {x: mousePosition.x, y: mousePosition.y}
+        );
+      }
+      setMousePositions(mousePositions)
     }
   }, [clickCount, dots, mousePosition]);
 
@@ -94,7 +64,9 @@ export default function HomePage(props) {
           }}
         ></div>
       ) : null}
-      {dots}
+      {mousePositions.map((el, i) => (
+        <Dots key={'dot ' + i} mouseX={el.x} mouseY={el.y} opacity={1 - i/mousePosition.length} />  
+      ))}
     </div>
   );
 }
