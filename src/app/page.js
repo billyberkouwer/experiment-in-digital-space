@@ -7,22 +7,18 @@ import useClickCount from "hooks/useClickCount";
 import useMousePosition from "hooks/useMousePosition";
 import usepageSize from "hooks/usePageSize";
 import isMobile from "is-mobile";
-import { createElement, useEffect, useState } from "react";
-import { Color } from "three";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Axis from "./axis";
 import CustomSwitch from "./customSwitch";
 import Dot from "./dot";
 import Points from "./points";
-import { IOSSwitch } from "./switch";
 
 export default function HomePage(props) {
   const pageSize = usepageSize();
   const mousePosition = useMousePosition();
   const clickCount = useClickCount();
-  const [dots, setDots] = useState([]);
   const [mousePositions, setMousePositions] = useState([]);
   const [isMobileClient, setIsMobileClient] = useState(false);
-  const [maxScreen, setMaxScreen] = useState({width: 0, height: 0});
   const [scaleIncrements, setScaleIncrements] = useState([]);
   const [theme, setTheme] = useState('dark');
   const dark = theme === 'dark';
@@ -32,9 +28,8 @@ export default function HomePage(props) {
     console.log(theme)
   }, [theme])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsMobileClient(isMobile());
-    setMaxScreen({width: window.innerWidth, height: window.innerHeight})
   }, []);
 
   useEffect(() => {
@@ -58,6 +53,7 @@ export default function HomePage(props) {
   if (isMobileClient) {
     return (
       <div
+        className={`${dark && 'container--dark-theme'} ${light && 'container--light-theme'}`} 
         style={{
           display: "flex",
           justifyContent: "center",
@@ -73,12 +69,15 @@ export default function HomePage(props) {
             height: "100vh",
             width: "100vw",
             top: 0,
+            pointerEvents: "none"
           }}
         >
-          <Torus />
-          <Plane />
+          {light && <fog attach="fog" color="white" near={1} far={10} />}
+          {dark && <fog attach="fog" color="black" near={1} far={10} />}
+          <Torus theme={theme} />
+          <Plane theme={theme} />
         </Canvas>
-        <h3 style={{ maxWidth: "200px" }}>visit this site on desktop</h3>
+        <h3 style={{ maxWidth: "200px", color: 'white', zIndex: 100 }}>visit this site on desktop</h3>
       </div>
     );
   } else {
