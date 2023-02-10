@@ -8,7 +8,9 @@ import useMousePosition from "hooks/useMousePosition";
 import usepageSize from "hooks/usePageSize";
 import isMobile from "is-mobile";
 import { createElement, useEffect, useState } from "react";
-import Dots from "./dots";
+import Axis from "./axis";
+import Dot from "./dot";
+import Points from "./points";
 
 export default function HomePage(props) {
   const pageSize = usepageSize();
@@ -101,28 +103,8 @@ export default function HomePage(props) {
             </p>
           </div>
         ) : null}
-        <div className="axis" />
-        {scaleIncrements.map((el, i) =>
-          <p className="axisNumber axisNumberX" style={{left: el.width}}>{el.width}</p>
-        )}
-        {scaleIncrements.map((el, i) =>
-        <>
-          <p className="axisNumber axisNumberY" style={{top: el.height}}>{el.height}</p>
-          {console.log(el)}
-        </>
-        )}
-        {mousePositions.map((el, i) => {
-          if (mousePositions.length - i <= 300) {
-            return (
-              <Dots
-                key={"dot " + i}
-                mouseX={el.x}
-                mouseY={el.y}
-                opacity={i / mousePositions.length}
-              />
-            );
-          }
-        })}
+        <Axis scaleIncrements={scaleIncrements} />
+        <Points mousePositions={mousePositions} />
       </div>
     );
   }
